@@ -1,0 +1,8 @@
+name: Publish Document
+title:
+account: rpubs
+server: rpubs.com
+appId: https://api.rpubs.com/api/v1/document/233561/2e18597ca41c4048bc9d5b1ccfe65930
+bundleId: https://api.rpubs.com/api/v1/document/233561/2e18597ca41c4048bc9d5b1ccfe65930
+url: http://rpubs.com/melinatarituba/233561
+when: 1481125583.51872
