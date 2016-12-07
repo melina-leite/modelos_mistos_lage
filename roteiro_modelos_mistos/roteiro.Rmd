@@ -1,6 +1,6 @@
 ---
 title: "Introdução aos Modelos Mistos"
-subtitle: "LAGE - USP"
+subtitle: "Grupo de discussão Modelos Mistos da LAGE - IB/USP"
 author: "Melina Leite, Marília Gaiarsa, Lucas Medeiros"
 date: "`r format(Sys.time(), '%d de %B de %Y')`"
 output:
@@ -67,7 +67,7 @@ Nesse momento, você deve estar se perguntando: esse roteiro é para mim?! Para 
 
 7. Fazer uma análise visual de diagnóstico do modelo.
 
-Caso se sinta um pouco perdido com certas terminologias estatísticas ou queira relembrar alguns termos, ao final do roteiro temos um pequeno **glossário** que pdoe ajudar.
+Caso se sinta um pouco perdido com certas terminologias estatísticas ou queira relembrar alguns termos, ao final do roteiro temos um pequeno **glossário** que pode ajudar.
 
 # Modelos Mistos
 
