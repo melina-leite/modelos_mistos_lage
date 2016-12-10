@@ -212,7 +212,7 @@ Por isso, é importante testar diferentes modelos antes de decidir qual é o mel
 
 Existem modelos e, portanto, perguntas e delineamentos amostrais, que requere apenas um efeito aleatório para indicar o agrupamento dos dados. Entretanto, como colocado no final da seção anterior, há também modelos que podem incluir mais de um efeito aleatório. Esse é o caso da interação entre `praia` e `NAP` mencionada acima. Se olharmos para a primeira, veremos que cada praia parece ter seu próprio intercepto e inclinação, o que torna plausível pensarmos que o modelo com a interação se ajuste melhor aos nosso dados.
 
-Para modelos que model ter mais de um efeito aleatório, Zuur et al. (2009), sugere um protocolo para a escolha da melhor estrutura de efeitos aleatórios. Vamos aos passos:
+Para modelos que podem ter mais de um efeito aleatório, Zuur et al. (2009), sugere um protocolo para a escolha da melhor estrutura de efeitos aleatórios. Vamos aos passos:
 
 1. A primeira coisa a ser feita é ajustar um modelo com todos os efeitos fixos que estão sendo testados (modelo "completo"). No nosso exemplo tínhamos apenas `NAP`, mas vamos incluir `Exposure` (como fator) para exemplificar melhor, e vamos incluir a interação entre `NAP` e `Exposure`. Nosso modelo "completo" é:
 
