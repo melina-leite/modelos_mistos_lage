@@ -51,7 +51,7 @@ Esse roteiro é fruto de um grupo de discussões sobre modelos mistos da LAGE (I
 
 [^5]: caso queira ter acesso ao arquivo .Rmd do roteiro acesse o [repositório no github](https://github.com/melina-leite/melina-leite.github.io).
 
-Nesse momento, você deve estar se perguntando: esse roteiro é para mim?! Para acompanha-lo é interessante ter uma compreensão básica de análises estatísticas em **R**. Isso quer dizer que você já usou e sabe interpretar o output de funções como `lm()`. Esperamos que ao terminar você seja capaz de: 
+Nesse momento, você deve estar se perguntando: esse roteiro é para mim?! Para acompanhá-lo é interessante ter uma compreensão básica de análises estatísticas em **R**. Isso quer dizer que você já usou e sabe interpretar o output de funções como `lm()`. Esperamos que ao terminar você seja capaz de: 
 
 1. Entender o que são efeitos fixos e aleatórios.  
 
@@ -71,11 +71,11 @@ Caso se sinta um pouco perdido com certas terminologias estatísticas ou queira 
 
 # Modelos Mistos
 
-Para explicar o que são modelos mistos e sua importância em ecologia, usaremos como exemplo um conjunto de dados presentes no capítulo 5 de Zuur et al. (2009). Esses dados contém a riqueza de espécies da macro-fauna em 9 praias na costa da Holanda. Em cada uma das praias, os autores coletaram dados em cinco sítios diferentes. Para cada sítio existe informação sobre a altura da estação de amostragem em relação à altura média da maré (`NAP`). Vamos supor que estamos interessados em verificar se a variável `NAP` influencia a riqueza de espécies nessas praias. Uma primeira ideia que poderíamos ter é construir um modelo linear da seguinte forma:
+Para explicar o que são modelos mistos e sua importância em ecologia, usaremos como exemplo um conjunto de dados presente no capítulo 5 de Zuur et al. (2009). Esses dados contêm a riqueza de espécies da macro-fauna em 9 praias na costa da Holanda. Em cada uma das praias, os autores coletaram dados em cinco sítios diferentes. Para cada sítio existe informação sobre a altura da estação de amostragem em relação à altura média da maré (`NAP`). Vamos supor que estamos interessados em verificar se a variável `NAP` influencia a riqueza de espécies nessas praias. Uma primeira ideia que poderíamos ter é construir um modelo linear da seguinte forma:
 
 $$riqueza = \alpha + \beta * NAP + \varepsilon$$
 
-Aqui estamos modelando a riqueza de cada praia em função da variável `NAP`. O coeficiente $\alpha$ é o intercepto do modelo, $\beta$ é o coeficiente angular (inclinação) de `NAP` e $\varepsilon$ é o erro do nosso modelo (resíduos), isto é, a variação da riqueza que não conseguimos explicar com nossa variável preditora `NAP`. No entanto, esse modelo tem um problema. Estamos violando uma premissa fundamental de modelos lineares, a de que os dados são independentes uns dos outros (Winter, 2013). Os dados obtidos em uma mesma praia não são independentes entre si (dependência espacial). Podemos imaginar diversas características de cada praia que podem influenciar a riqueza de espécies, como o tipo de grão de areia ou a força das ondas. Veja o gráfico abaixo[^3], em que cada cor representa uma praia para se convencer de que a relação entre riqueza e NAP varia entre praias:
+Aqui estamos modelando a riqueza de cada praia em função da variável `NAP`. O coeficiente $\alpha$ é o intercepto do modelo, $\beta$ é o coeficiente angular (inclinação) de `NAP` e $\varepsilon$ é o erro do nosso modelo (resíduos), isto é, a variação da riqueza que não conseguimos explicar com nossa variável preditora `NAP`. No entanto, esse modelo tem um problema. Estamos violando uma premissa fundamental de modelos lineares, a de que os dados são independentes uns dos outros (Winter, 2013). Os dados obtidos em uma mesma praia não são independentes entre si (dependência espacial). Podemos imaginar diversas características de cada praia que podem influenciar a riqueza de espécies, como o tipo de grão de areia ou a força das ondas. Veja o gráfico abaixo[^3], em que cada cor representa uma praia, para se convencer de que a relação entre riqueza e `NAP` varia entre praias:
 
 [^3]: clique no gráfico para ver em maior tamanho.
 
@@ -98,9 +98,9 @@ ggplot(data = dados, aes(x = NAP, y = Richness, color = Praia)) +
   geom_smooth(method = "lm", se = F)
 ```
 
-Nesta figura, temos as retas do modelo entre `Riqueza` e `NAP` aplicado para cada praia (usando a função `lm()`). Entretanto, nossa pergunta inicial não diz respeito à cada praia separadamente, nós queremos modelar esta relação para todas as praias amostradas, sem pseudoreplicação (não-independências dos dados) e queremos fazer isso de forma a ser possível predizer a riqueza em praias não amostradas.
+Nesta figura, temos as retas do modelo entre `Riqueza` e `NAP` aplicado para cada praia (usando a função `lm()`). Entretanto, nossa pergunta inicial não diz respeito a cada praia separadamente, nós queremos modelar esta relação para todas as praias amostradas, sem pseudoreplicação (não-independência dos dados) e queremos fazer isso de forma a ser possível predizer a riqueza em praias não amostradas.
 
-Portanto, precisamos de um modelo linear que incorpore o fato de que nossos dados estão agrupados em praias. Chamamos de um **efeito aleatório** uma variável que agrupa nossos dados e que seu efeito sobre a variável resposta não nos interessa diretamente (nesse exemplo não interessa, mas depenendo da análise, pode interessar - veja discussão em McGill 2015). Nesse caso, os autores amostraram nestas 9 praias, mas poderiam ter feito o mesmo estudo escolhendo outras praias. O efeito aleatório praia "organiza" a parte da variação nos nossos dados que não conseguimos explicar, presente no erro $\varepsilon$ do modelo (Winter, 2013). Por outro lado, as variáveis preditoras que estamos acostumados a encontrar em modelos lineares são chamadas de **efeitos fixos**. No exemplo das praias, a variável `NAP` é um efeito fixo e estamos diretamente interessados em seu efeito sobre a variável resposta. O nome "misto" advém do fato de que existe ao menos um efeito fixo e um efeito aleatório. 
+Portanto, precisamos de um modelo linear que incorpore o fato de que nossos dados estão agrupados em praias. Chamamos de um **efeito aleatório** uma variável que agrupa nossos dados e que seu efeito sobre a variável resposta não nos interessa diretamente (nesse exemplo não interessa, mas dependendo da análise, pode interessar - veja discussão em McGill 2015). Nesse caso, os autores amostraram nestas 9 praias, mas poderiam ter feito o mesmo estudo escolhendo outras praias. O efeito aleatório `praia` "organiza" a parte da variação nos nossos dados que não conseguimos explicar, presente no erro $\varepsilon$ do modelo (Winter, 2013). Por outro lado, as variáveis preditoras que estamos acostumados a encontrar em modelos lineares são chamadas de **efeitos fixos**. No exemplo das praias, a variável `NAP` é um efeito fixo e estamos diretamente interessados em seu efeito sobre a variável resposta. O nome "misto" advém do fato de que existe ao menos um efeito fixo e um efeito aleatório. 
 
 Em ecologia, é comum encontrarmos delineamentos amostrais ou experimentais que geram dados com algum tipo de agrupamento (delineamento hierárquico ou aninhado). Por exemplo, quando uma amostragem é feita por parcelas ou quando um experimento é separado em diferentes blocos. Nesses casos, não podemos tratar nossos dados como independentes e a abordagem estatística mais adequada é a de **modelos mistos**. 
 
@@ -109,14 +109,14 @@ Na seção a seguir veremos como explorar modelos mistos no **R**. Veremos que a
 
 $$riqueza_i = \alpha + b_i + \beta * NAP + \varepsilon_{i}$$
 
-A riqueza da praia `i` é explicada pelo efeito fixo $\beta*NAP$ e pelo efeito aleatório $b_i$, que se soma ao valor do intercepto fixo do modelo $\alpha$ para formar o intercepto da praia `i`. Veja que o índice `i` está atrelado a $b_i$ e portanto, o modelo permite que cada uma das praias apresente uma relação diferente entre riqueza e NAP. Já $\beta$ faz parte do efeito fixo, e não possuí nenhum índice `i` atrelado a ele. E $\varepsilon$ representa o erro associado a cada uma das amostras na mesma praia.  
+A riqueza da praia `i` é explicada pelo efeito fixo $\beta*NAP$ e pelo efeito aleatório $b_i$, que se soma ao valor do intercepto fixo do modelo, $\alpha$, para formar o intercepto da praia `i`. Veja que o índice `i` está atrelado a $b_i$ e, portanto, o modelo permite que cada uma das praias apresente uma relação diferente entre riqueza e NAP. Já $\beta$ faz parte do efeito fixo, e não possuí nenhum índice `i` atrelado a ele. Finalmente, $\varepsilon$ representa o erro associado a cada uma das amostras na mesma praia.  
 
 
 # Mãos à massa! Modelos mistos no R
 
-Existem vários pacotes disponíveis no R para relizar análises de modelos mistos. Neste roteiro usaremos o `lme4` (Bates et al. 2014), que possui funções para analisar modelos lineares mistos, modelos lineares mistos generalizados e modelos mistos não lineares. A seguir, vamos colocar a mão na massa e analisar os dados provenientes do capítulo 5 de Zuur et al. (2009) que exploramos na seção anterior.
+Existem vários pacotes disponíveis no R para realizar análises de modelos mistos. Neste roteiro usaremos o `lme4` (Bates et al. 2014), que possui funções para analisar modelos lineares mistos, modelos lineares mistos generalizados e modelos mistos não lineares. A seguir, vamos colocar a mão na massa e analisar os dados provenientes do capítulo 5 de Zuur et al. (2009) que exploramos na seção anterior.
 
-Antes de tudo, precisamos baixar e instalar o pacote lme4:
+Antes de tudo, precisamos baixar e instalar o pacote `lme4`:
 
 ```{r, eval=F}
 install.packages("lme4")
@@ -129,14 +129,14 @@ Os dados estão disponíveis no site do livro do Zuur et al. (2009) ([baixe aqui
 dados <- read.table("RIKZ.txt", header = TRUE, row.names = 1, as.is = TRUE)
 ```
 
-Nossa tabela da dados não possui nenhum valor faltante, mas caso possuísse, não tem muito problema em análises de modelos mistos. Agora, vamos construir nosso modelo.  
+Nossa tabela de dados não possui nenhum valor faltante, mas caso possuísse, não tem muito problema em análises de modelos mistos. Agora, vamos construir nosso modelo.  
 
 ```{r, echo=F}
 kable(head(dados, 10L), citation = "Primeiras linhas da tabela de dados RIKZ. Para simplificar o exemplo, não vamos usar a variável `Exposure` agora.")
 ```
 
 
-Relembrando, estamos interessados em ver se existe um efeito de `NAP` na riqueza de espécies. Nossos dados contam com nove diferentes praias, e cinco diferentes amostras para cada uma delas. Assim, temos como efeito fixo a variável `NAP`, e a variável aleatória praia (`Beach`), que significa que cada praia terá um intercepto diferente. Assim, nosso modelo é:
+Relembrando, estamos interessados em ver se existe um efeito de `NAP` na riqueza de espécies. Nossos dados contam com nove diferentes praias e cinco diferentes amostras para cada uma delas. Dessa forma, temos como efeito fixo a variável `NAP`, e como efeito aleatório a variável praia (`Beach`), que significa que cada praia terá um intercepto diferente. Assim, nosso modelo é:
 
 ```{r}
 modelo.riqueza <- lmer(Richness ~ NAP +  (1 | Beach), data = dados)
@@ -148,13 +148,13 @@ Em seguida, vamos dar uma olhada no output do modelo:
 summary(modelo.riqueza)
 ```
 
-Vamos dar uma olhada na parte dos efeitos aleatórios. O desvio padrão é uma medida do quanto a variablidade da nossa variável dependente - riqueza - é devido aos dois efeitos aleatórios que estamos analisando (os interceptos das praias e os resíduos). Podemos ver o desvio padrão associado às diferenças de intercepto entre praias (o $b_i$ do modelo). A última linha nos dá o resíduo, que indica o quanto da variabilidade não é prevista pela praia nem pelo `NAP`, que nada mais é do que o $\epsilon$ acima explicado. 
+Vamos dar uma olhada na parte dos efeitos aleatórios. O desvio padrão é uma medida do quanto a variablidade da nossa variável dependente - riqueza - é devida aos dois efeitos aleatórios que estamos analisando (os interceptos das praias e os resíduos). Podemos ver o desvio padrão associado às diferenças de intercepto entre praias (o $b_i$ do modelo). A última linha nos dá o resíduo, que indica o quanto da variabilidade não é prevista pela praia nem pelo `NAP`, que nada mais é do que o $\varepsilon$ acima explicado. 
 
 ```{r, echo=F}
 cof <- fixef(modelo.riqueza)
 ```
 
-Os efeitos fixos indicam o coeficientes estimado pra cada um dos fatores que estamos considerando como fixos. No caso, temos o intercepto que é a riqueza quando o `NAP` é zero (`r cof[1]`), e o coeficiente angular de NAP (`r cof[2]`).
+Os efeitos fixos indicam os coeficientes estimado pra cada um dos fatores que estamos considerando como fixos. No caso, temos o intercepto que é a riqueza quando o `NAP` é zero (`r cof[1]`), e o coeficiente angular de NAP (`r cof[2]`).
 
 Para fazer o gráfico de nosso modelo ajustado, com a reta (predição) dos efeitos fixos e as "retinhas" preditas para cada praia, vamos primeiro calcular os valores preditos para cada praia[^1].
 
@@ -204,9 +204,9 @@ ggplot(data = dados, aes(x = NAP, y = Richness, color = Praia)) + # dados e eixo
 
 Podemos ver nessa figura a predição do nosso modelo em relação aos parâmetros fixos (reta em preto), e as predições para cada praia separadamente. Como o efeito aleatório do nosso modelo estava apenas variando os valores de intercepto das praias, as retas para cada praia são paralelas.
 
-Existem, entretanto, diversas maneiras de criar seu modelo, escolher os parâmetros importantes, e decidir quais são fixos e quais são aleatórios. Nesse exemplo, poderíamos colocar a variável `Exposure` também como um efeito fixo (mais indicado seria usá-la como um fator com 3 níveis). Outra complicação que poderíamos inserir no noso modelo é inserir mais um efeito aleatório de interação entre a `praia` (efeito aleatório) e `NAP` (efeito fixo), fazendo com que cada praia possa ter inclinações de reta diferentes.
+Existem, entretanto, diversas maneiras de criar seu modelo, escolher os parâmetros importantes, e decidir quais são fixos e quais são aleatórios. Nesse exemplo, poderíamos colocar a variável `Exposure` também como um efeito fixo (mais indicado seria usá-la como um fator com 3 níveis). Outra complicação que poderíamos inserir no nosso modelo é inserir mais um efeito aleatório de interação entre a `praia` (efeito aleatório) e `NAP` (efeito fixo), fazendo com que cada praia possa ter inclinações de reta diferentes.
 
-Por isso, é importante testas diferentes modelos antes de decidir qual o melhor. Na próxima parte abordaremoso como selecionar o melhor modelo dada todas as possibilidades. 
+Por isso, é importante testar diferentes modelos antes de decidir qual é o melhor. Na próxima parte abordaremos como selecionar o melhor modelo dadas todas as possibilidades. 
 
 # Escolha dos efeitos aleatórios
 
