@@ -49,7 +49,8 @@ dados <- read.table("RIKZ.txt", header = TRUE, row.names = 1, as.is = TRUE)
 
 Esse roteiro é fruto de um grupo de discussões sobre modelos mistos da LAGE (IB - USP). O nosso objetivo é apresentar modelos lineares mistos e a sua aplicação usando dados ecológicos e o ambiente de programação **R**[^5].
 
-[^5]: caso queira ter acesso ao arquivo .Rmd do roteiro acesse o [repositório no github](https://github.com/melina-leite/melina-leite.github.io).
+[^5]: caso queira ter acesso ao arquivo .Rmd do roteiro acesse o [repositório no github](https://melina-leite.github.io/modelos_mistos_lage/).
+
 
 Nesse momento, você deve estar se perguntando: esse roteiro é para mim?! Para acompanhá-lo é interessante ter uma compreensão básica de análises estatísticas em **R**. Isso quer dizer que você já usou e sabe interpretar o output de funções como `lm()`. Esperamos que ao terminar você seja capaz de: 
 
