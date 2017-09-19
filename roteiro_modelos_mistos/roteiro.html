@@ -278,6 +278,8 @@ Relação entre riqueza e NAP para cada ponto em cada praia amostrada. As linhas
 ## NAP -0.157</code></pre>
 <p>Vamos dar uma olhada na parte dos efeitos aleatórios. O desvio padrão é uma medida do quanto a variablidade da nossa variável dependente - riqueza - é devida aos dois efeitos aleatórios que estamos analisando (os interceptos das praias e os resíduos). Podemos ver o desvio padrão associado às diferenças de intercepto entre praias (o <span class="math inline">\(b_i\)</span> do modelo). A última linha nos dá o resíduo, que indica o quanto da variabilidade não é prevista pela praia nem pelo <code>NAP</code>, que nada mais é do que o <span class="math inline">\(\varepsilon\)</span> acima explicado.</p>
 <p>Os efeitos fixos indicam os coeficientes estimado pra cada um dos fatores que estamos considerando como fixos. No caso, temos o intercepto que é a riqueza quando o <code>NAP</code> é zero (6.5818929), e o coeficiente angular de NAP (-2.5683996).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#criando objeto com os coeficientes do modelo (efeitos fixos)</span>
+cof &lt;-<span class="st"> </span><span class="kw">fixef</span>(modelo.riqueza)</code></pre></div>
 <p>Para fazer o gráfico de nosso modelo ajustado, com a reta (predição) dos efeitos fixos e as “retinhas” preditas para cada praia, vamos primeiro calcular os valores preditos para cada praia<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Primeiro criamos um novo conjunto de dados com as características no antigo</span>
 novo &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">Beach =</span> <span class="kw">unique</span>(dados<span class="op">$</span>Beach),
@@ -470,15 +472,13 @@ Gráficos de resíduos do melhor modelo ajustado.
 
 <div id="postamble" data-toggle="wy-nav-shift" class="status">
 <p class="author"><span class="glyphicon glyphicon-user"></span> Melina Leite, Marília Gaiarsa, Lucas Medeiros</p>
-<p class="date"><span class="glyphicon glyphicon-calendar"></span> 18 de September de 2017</p>
+<p class="date"><span class="glyphicon glyphicon-calendar"></span> 19 de September de 2017</p>
 </div>
 
 
 <script>
 $(document).ready(function () {
- 	 	$('#content img')
- 	  .addClass("image-thumb");
-      $('#content img')
+ 	    $('#content img')
  	  .addClass("image-lb");
   $('#content').magnificPopup({
 	      type:'image',

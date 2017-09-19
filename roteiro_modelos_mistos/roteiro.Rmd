@@ -7,7 +7,7 @@ output:
   rmdformats::readthedown:
     highlight: kate
     self_contained: true
-    thumbnails: true
+    thumbnails: false
     lightbox: true
     gallery: false
     fig_heigth: 20
@@ -156,6 +156,11 @@ cof <- fixef(modelo.riqueza)
 ```
 
 Os efeitos fixos indicam os coeficientes estimado pra cada um dos fatores que estamos considerando como fixos. No caso, temos o intercepto que é a riqueza quando o `NAP` é zero (`r cof[1]`), e o coeficiente angular de NAP (`r cof[2]`).
+
+```{r}
+#criando objeto com os coeficientes do modelo (efeitos fixos)
+cof <- fixef(modelo.riqueza)
+```
 
 Para fazer o gráfico de nosso modelo ajustado, com a reta (predição) dos efeitos fixos e as "retinhas" preditas para cada praia, vamos primeiro calcular os valores preditos para cada praia[^1].
 
